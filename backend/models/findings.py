@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from uuid import UUID
 from .enums import AgentType, Severity, FindingCategory
 
@@ -16,6 +16,15 @@ class Finding(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0)
     rationale: str
     id: Optional[UUID] = None
+
+    @computed_field
+    @property
+    def confidence_level(self) -> str:
+        if self.confidence >= 0.85:
+            return "HIGH"
+        if self.confidence >= 0.60:
+            return "MEDIUM"
+        return "LOW"
 
 
 class FindingCreate(Finding):
