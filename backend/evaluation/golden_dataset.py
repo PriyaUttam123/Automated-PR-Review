@@ -1,6 +1,6 @@
-from typing: List, Dict, Any
+from typing import List, Dict, Any
 from dataclasses import dataclass
-from uuid import UUID
+
 
 
 @dataclass
